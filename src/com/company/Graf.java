@@ -38,7 +38,7 @@ public class Graf {
             grany.setNullStepenGrany();
         }
         rebraList.clear();
-    }; //удаление всех ребер
+    } //удаление всех ребер
 
     public void addGrany(Grany g){ //добавляторы
         granyList.add(g);
@@ -81,7 +81,7 @@ public class Graf {
                             existC=true;
                         }
                     }
-                    if (existC==false){
+                    if (!existC){
                         System.out.println(rebraList.indexOf(a));
                         System.out.println(rebraList.indexOf(b));
                         return false; //не нашли подходящее ребро
@@ -115,6 +115,58 @@ public class Graf {
             }
             if (!exist){
             return false;}
+        }
+        return true;
+    }
+
+    public boolean connect(Grany a, Grany b){ //наличие пути меж вершинами
+        if (a==b) { //если сравниваемые грани совпали, то нет смысла проверять)
+            return true;
+        }
+        boolean[] visited = new boolean[granyList.size()];
+        visited[granyList.indexOf(a)]=true;  //начальная точка посещена
+        for (Rebra r:rebraList){ //идем по ребрам, которые соединены с А и непройдеными вершинами
+            if ((r.startPoint==a && !visited[granyList.indexOf(r.finishPoint)]) || (r.finishPoint==a && !visited[granyList.indexOf(r.startPoint)])){
+                if (r.startPoint==a && !visited[granyList.indexOf(r.finishPoint)]){
+                    if (connect(r.finishPoint,b,visited)){ //рекурсия для прохода по всем возможным путям
+                        return true;
+                    }
+                }
+                if (r.finishPoint==a && !visited[granyList.indexOf(r.startPoint)]){
+                    if (connect(r.startPoint,b,visited)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    private boolean connect(Grany a, Grany b,boolean[] visited){ //наличие пути меж вершинами вспомогательное
+        if (a==b) { //если сравниваемые грани совпали, то они соединены
+            return true;
+        }
+        visited[granyList.indexOf(a)]=true; //начальная точка посещена
+        for (Rebra r:rebraList){ //идем по ребрам, которые соединены с А и непройдеными вершинами
+            if (r.startPoint==a && !visited[granyList.indexOf(r.finishPoint)]){
+                if (connect(r.finishPoint,b,visited)){
+                    return true;
+                }
+            }
+            if (r.finishPoint==a && !visited[granyList.indexOf(r.startPoint)]){
+                if (connect(r.startPoint,b,visited)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean connectivity() {//связность
+        for (Grany gran1:granyList) { //обходим пары вершин, чтобы у каждой из них был путь к любой вершине
+            for (Grany gran2:granyList){
+                if (!connect(gran1,gran2)) {
+                    return false; //если хоть одна пара вершин не имеют общего пути, то граф не связен
+                }
+            }
         }
         return true;
     }
