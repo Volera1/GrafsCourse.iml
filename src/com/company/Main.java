@@ -11,6 +11,7 @@ public class Main {
         firstGraf.addRebra(3,2);
         firstGraf.addRebra(3,3);
         firstGraf.addRebra(1,1);
+        firstGraf.addRebra(1,3);
 
         for (Grany grany:firstGraf.granyList) {
             System.out.println(grany.getStepenGrany());

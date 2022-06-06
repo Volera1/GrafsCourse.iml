@@ -67,20 +67,25 @@ public class Graf {
         }
         return loops;
     }
+    public boolean adjacency(Rebra first, Rebra second){ //смежность ребер
+        if ((first.finishPoint== second.finishPoint)||(first.startPoint== second.finishPoint)||(first.startPoint==second.startPoint)||(first.finishPoint==second.startPoint))
+        {
+            if (first!=second){
+            return true;}
+        }
+        return false;
+    }
     public boolean transitive(){ //проверка на транзитивность (если вершины 1 и 2, 2 и 3 соединены, то и 1 и 3 соеденены)
         //изначально транзитивный, если даже нет ребер, тк условие транзитивноти соблюдено
         for (Rebra a:rebraList) { //первая связь для проверки
             for (Rebra b:rebraList) { //вторая связь для проверки
-                if (a != b && !(a.isLoop() && b.isLoop()) && ((a.startPoint == b.startPoint) || (a.finishPoint == b.startPoint))) { //отобрали то, что стоит проверять
+                if (a != b && !(a.isLoop() || b.isLoop()) && adjacency(a,b)) { //отобрали то, что стоит проверять
                     boolean existC=false;
                     for (Rebra c : rebraList) { //связь, существование которой проверяется
-                        if ((a.startPoint == b.startPoint) && (c.startPoint==a.finishPoint || c.startPoint== b.finishPoint) &&(c.finishPoint==a.finishPoint || c.finishPoint==b.finishPoint) && !c.isLoop()) {
+                        if (adjacency(a,c) && adjacency(b,c))
                             existC=true;
-                        }
-                        if ((a.finishPoint == b.startPoint) && (c.startPoint==a.startPoint || c.startPoint== b.finishPoint) &&(c.finishPoint==a.startPoint || c.finishPoint==b.finishPoint) && !c.isLoop()) {
-                            existC=true;
-                        }
                     }
+
                     if (!existC){
                         System.out.println(rebraList.indexOf(a));
                         System.out.println(rebraList.indexOf(b));
