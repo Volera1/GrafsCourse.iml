@@ -17,11 +17,10 @@ public class Rebra {
     }
 
     public boolean isLoop() { //проверка ребра на петлю
-        if (this.startPoint == this.finishPoint) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.startPoint == this.finishPoint;
+    }
+    public int getPrice(){
+        return 1;
     }
 }
 
@@ -35,6 +34,7 @@ class RebraWithPrice extends Rebra { //ребра с длинной или це�
     public void setPrice(int price) {
         Price = price;
     }
+    @Override
     public int getPrice() {
         return Price;
     }

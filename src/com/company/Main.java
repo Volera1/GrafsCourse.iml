@@ -11,7 +11,7 @@ public class Main {
         firstGraf.addRebra(3,2);
         firstGraf.addRebra(3,3);
         firstGraf.addRebra(1,1);
-        firstGraf.addRebra(1,3);
+        //firstGraf.addRebra(1,3);
 
         for (Grany grany:firstGraf.granyList) {
             System.out.println(grany.getStepenGrany());
@@ -24,5 +24,6 @@ public class Main {
         System.out.println("Путь 1-2: "+firstGraf.connect(firstGraf.getGrany(1), firstGraf.getGrany(2) ));
         System.out.println("Путь 1-3: "+firstGraf.connect(firstGraf.getGrany(1), firstGraf.getGrany(3) ));
         System.out.println("Связность: "+firstGraf.connectivity());
+        //System.out.println(firstGraf.minimalWay(firstGraf.getGrany(1),firstGraf.getGrany(3)));
     }
 }
