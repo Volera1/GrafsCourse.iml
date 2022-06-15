@@ -1,9 +1,10 @@
-package com.company;
+package com.company.GrafLogic;
+
 import java.util.*;
 
 public class Graf {
-    protected ArrayList<Grany> granyList;
-    protected ArrayList<Rebra> rebraList;
+    public ArrayList<Grany> granyList;
+    public ArrayList<Rebra> rebraList;
 
     Graf() {
         granyList = new ArrayList<>();
@@ -18,7 +19,7 @@ public class Graf {
         rebraList = new ArrayList<>(countOfReber);
     }
 
-    Graf(int countOfGraney) { //только грани заданны
+    public Graf(int countOfGraney) { //только грани заданны
         granyList = new ArrayList<>(countOfGraney);
         for (int i = 0; i < countOfGraney; i++) {
             granyList.add(new Grany());

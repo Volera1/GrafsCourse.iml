@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.GrafLogic.Graf;
+import com.company.GrafLogic.Grany;
+
 public class Main {
 
     public static void main(String[] args) {

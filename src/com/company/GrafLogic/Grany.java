@@ -1,4 +1,4 @@
-package com.company;
+package com.company.GrafLogic;
 
 public class Grany {
     protected int StepenGrany; //степень грани (количество ребер)

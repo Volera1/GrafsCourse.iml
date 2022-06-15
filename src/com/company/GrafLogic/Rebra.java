@@ -1,4 +1,4 @@
-package com.company;
+package com.company.GrafLogic;
 
 public class Rebra {
     protected Grany startPoint;
