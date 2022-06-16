@@ -9,6 +9,11 @@ public class FormNew extends JFrame{
     private JPanel mainPanel;
     private JScrollPane scrollGraf;
     private JTable tableGraf;
+    private JSpinner spinnerCountOfGraney;
+    private JButton butGetChanges;
+    private JButton butNewRebro;
+    private JButton butClean;
+    private JLabel massageLable;
 
     public FormNew(){
         super("Graf");
