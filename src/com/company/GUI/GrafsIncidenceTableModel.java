@@ -29,6 +29,13 @@ public class GrafsIncidenceTableModel extends AbstractTableModel { //класс 
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        if(data.rebraList.isEmpty()){
+            return null;
+        }
+        if (data.getRebra(rowIndex+1).startPoint == data.getGrany(columnIndex+1)|| data.getRebra(rowIndex+1).finishPoint == data.getGrany(columnIndex+1)){
+            return 1;
+        }
         return null;
     }
+
 }

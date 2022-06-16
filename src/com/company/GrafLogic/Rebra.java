@@ -1,8 +1,8 @@
 package com.company.GrafLogic;
 
 public class Rebra {
-    protected Grany startPoint;
-    protected Grany finishPoint;
+    public Grany startPoint;
+    public Grany finishPoint;
 
     public Rebra() { //
         startPoint = new Grany();

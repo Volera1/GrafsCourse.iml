@@ -239,14 +239,14 @@ public class Graf {
         else if (newCount == granyList.size()){
             return "Количество вершин не изменено. Было указано значение равное предыдущему";
         }
-        else if (newCount>granyList.size()){
+        else {
             while (newCount!=granyList.size()){
                 granyList.add(new Grany());
             }
             return "Количество вершин увеличено до "+newCount;
         }
-        return "Количество вершин не изменено. Ошибка в changeCountOfGrany";
     }
+
 }
 
 
