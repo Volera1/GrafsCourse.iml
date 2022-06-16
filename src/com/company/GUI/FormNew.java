@@ -14,7 +14,6 @@ public class FormNew extends JFrame{
     private JSpinner spinnerCountOfGraney;
 
     private JButton butGetChanges;
-    private JButton butNewRebro;
     private JButton butClean;
     private JLabel massageLable;
 
