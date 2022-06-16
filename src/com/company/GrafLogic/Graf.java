@@ -229,6 +229,24 @@ public class Graf {
         }
         return result.toString();
     }
+    public String changeCountOfGrany(int newCount){
+        if (newCount < granyList.size()) {
+            while (newCount!=granyList.size()){
+                granyList.remove(granyList.size()-1);
+            }
+            return "Количество вершин уменьшено до "+newCount;
+        }
+        else if (newCount == granyList.size()){
+            return "Количество вершин не изменено. Было указано значение равное предыдущему";
+        }
+        else if (newCount>granyList.size()){
+            while (newCount!=granyList.size()){
+                granyList.add(new Grany());
+            }
+            return "Количество вершин увеличено до "+newCount;
+        }
+        return "Количество вершин не изменено. Ошибка в changeCountOfGrany";
+    }
 }
 
 
