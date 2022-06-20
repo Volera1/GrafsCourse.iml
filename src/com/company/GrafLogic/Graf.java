@@ -92,8 +92,13 @@ public class Graf {
                 if (a != b && !(a.isLoop() || b.isLoop()) && adjacency(a, b)) { //отобрали то, что стоит проверять
                     boolean existC = false;
                     for (Rebra c : rebraList) { //связь, существование которой проверяется
-                        if (adjacency(a, c) && adjacency(b, c))
+                        if (adjacency(a, c) && adjacency(b, c)&&!c.isLoop())
+                            if ((c.startPoint==a.startPoint||c.startPoint==a.finishPoint)&&(c.finishPoint== b.startPoint||c.finishPoint== b.finishPoint)){ //избежание ошибки начало и конец с должны быть от а и b
+                                existC = true;
+                            }
+                        if ((c.startPoint==b.startPoint||c.startPoint==b.finishPoint)&&(c.finishPoint== a.startPoint||c.finishPoint== a.finishPoint)){ //избежание ошибки
                             existC = true;
+                        }
                     }
                     if (!existC) {
                         return false; //не нашли подходящее ребро
@@ -232,6 +237,23 @@ public class Graf {
     public String changeCountOfGrany(int newCount){
         if (newCount < granyList.size()) {
             while (newCount!=granyList.size()){
+                ArrayList<Rebra> anconnected = new ArrayList<>();
+                for (Rebra r:rebraList){//проверяем ребра, которые могли быть соединены с вершиной
+                    anconnected.add(r);
+                    if (r.startPoint == getGrany(granyList.size())) {//проверяем начальную точку ребра
+                        if (r.isLoop()){//если было петлей, то удаляем
+                            anconnected.remove(r);
+                        }
+                        else {
+                            r.startPoint=r.finishPoint;//иначе делаем петлей
+                        }
+                    }
+                    if (r.finishPoint == getGrany(granyList.size())) {//проверяем конечную точку
+                        r.finishPoint=r.startPoint;//иначе делаем петлей
+
+                    }
+                }
+                rebraList=anconnected;
                 granyList.remove(granyList.size()-1);
             }
             return "Количество вершин уменьшено до "+newCount;
