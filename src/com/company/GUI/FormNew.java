@@ -47,6 +47,10 @@ public class FormNew extends JFrame{
             grafsIncidenceTableModel.fireTableStructureChanged();
         });
 
+        //меню
+        JMenuBar menuBar = new GrafMenuBar();
+
+        this.setJMenuBar(menuBar);
         //основные настройки окна
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -9,7 +9,7 @@ public class GrafsIncidenceTableModel extends AbstractTableModel { //класс 
 
     public GrafsIncidenceTableModel(Graf graf) {
         data = graf;
-    } //
+    } //конструктор с заданным графом
 
     @Override
     public String getColumnName(int column) {
@@ -62,6 +62,11 @@ public class GrafsIncidenceTableModel extends AbstractTableModel { //класс 
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         if (getValueAt(rowIndex,columnIndex) instanceof Boolean) {
             if (getValue(rowIndex,columnIndex)) { //Если ребро было инцендентно вершине, то мы создаем петлю. Ребро не может быть без начала и конца
+                if (data.getRebra(rowIndex+1).isLoop()){ //если нажатое было петлей, то удаляем
+                    data.rebraList.remove(rowIndex);
+                    this.fireTableStructureChanged();
+                    return;
+                }
                 if (data.getGrany(columnIndex) == data.getRebra(rowIndex+1).finishPoint) {
                     data.getRebra(rowIndex+1).finishPoint = data.getRebra(rowIndex+1).startPoint;
                 } else {
@@ -80,5 +85,5 @@ public class GrafsIncidenceTableModel extends AbstractTableModel { //класс 
     }
     public <T> T getValue(int row, int column) {
         return (T) getValueAt(row, column);
-    }
+    } //для преобразования классов внутри методов этого класса (setValueAt)
 }
