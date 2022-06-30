@@ -1,4 +1,4 @@
-package com.company.GUI;
+package main.java.com.company.GUI;
 
 import javax.swing.*;
 
@@ -14,7 +14,6 @@ public class GrafMenuBar extends JMenuBar {
         helpMenu.add(granyHelpItem);
         JMenuItem buttonHelpItem = new JMenuItem("Функциональные кнопки");
         helpMenu.add(buttonHelpItem);
-        this.add(helpMenu);
         //листенеры меню справки
         rebraHelpItem.addActionListener(e -> showMessageDialog(null, """
                         Ребра графа представляются строками таблицы (согласно правилам задания графа матрицей инцендентности).
@@ -37,6 +36,22 @@ public class GrafMenuBar extends JMenuBar {
                         Кнопка ОЧИСТИТЬ ГРАФ очищает всю информацию о графе. Удаляются все ребра, а вершины приходят к количеству, указанному на счетчике
                         Кнопка ПРИМЕНИТЬ создана для регулирования количества вершин в графе. Подробнее можно узнать в разделе Справка/Вершины графа""",
                 "Функциональные кнопки",JOptionPane.PLAIN_MESSAGE));
+        //Пути
+        JMenu waysMenu = new JMenu("Пути");
+        JMenuItem minimalWayItem = new JMenuItem("Минимальный путь");
+        waysMenu.add(minimalWayItem);
+
+        //работа с файлами
+        JMenu fileMenu = new JMenu("Файл");
+        JMenuItem outputFileItem = new JMenuItem("Вывод в файл");
+        JMenuItem inputFileItem = new JMenuItem("Ввод из файла");
+        fileMenu.add(outputFileItem);
+        fileMenu.add(inputFileItem);
+
+        //сборка панели меню
+        this.add(helpMenu);
+        this.add(waysMenu);
+        this.add(fileMenu);
     }
 
 }

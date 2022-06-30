@@ -1,4 +1,4 @@
-package com.company.GrafLogic;
+package main.java.com.company.GrafLogic;
 
 import java.util.*;
 
@@ -112,7 +112,7 @@ public class Graf {
     public boolean simmetry() {//симметричный граф - транзитивный, без петель, с единой степенью граней
         if (transitive() && (getCountOfLoops() == 0)) {
             for (Grany gran : granyList) {
-                if (gran.StepenGrany != granyList.get(0).getStepenGrany()) {
+                if (gran.getStepenGrany() != granyList.get(0).getStepenGrany()) {
                     return false;
                 }
             }

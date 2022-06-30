@@ -1,4 +1,4 @@
-package com.company.GrafLogic;
+package main.java.com.company.GrafLogic;
 
 public class Rebra {
     public Grany startPoint;

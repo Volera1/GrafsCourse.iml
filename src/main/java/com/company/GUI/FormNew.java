@@ -1,6 +1,7 @@
-package com.company.GUI;
+package main.java.com.company.GUI;
 
-import com.company.GrafLogic.Graf;
+
+import main.java.com.company.GrafLogic.Graf;
 
 import javax.swing.*;
 import java.awt.*;
