@@ -1,4 +1,4 @@
-package main.java.com.company.GrafLogic;
+package com.company.GrafLogic;
 
 import java.util.*;
 

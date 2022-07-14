@@ -1,10 +1,14 @@
-package main.java.com.company.GUI;
+package com.company.GUI;
 
 import javax.swing.*;
+
+import java.awt.*;
 
 import static javax.swing.JOptionPane.*;
 
 public class GrafMenuBar extends JMenuBar {
+    private final Component parent = getParent();
+    JFileChooser fileChoose = new JFileChooser();
     public GrafMenuBar(){
         //мекет меню справки
         JMenu helpMenu = new JMenu("Справка");
@@ -43,10 +47,18 @@ public class GrafMenuBar extends JMenuBar {
 
         //работа с файлами
         JMenu fileMenu = new JMenu("Файл");
-        JMenuItem outputFileItem = new JMenuItem("Вывод в файл");
+        JMenuItem outputFileItem = new JMenuItem("Сохранить файл");
         JMenuItem inputFileItem = new JMenuItem("Ввод из файла");
         fileMenu.add(outputFileItem);
         fileMenu.add(inputFileItem);
+        outputFileItem.addActionListener(e -> {
+            int outFile = fileChoose.showOpenDialog(parent);
+
+        }        );
+        inputFileItem.addActionListener(e -> {
+            int inFile = fileChoose.showSaveDialog(parent);
+
+        });
 
         //сборка панели меню
         this.add(helpMenu);

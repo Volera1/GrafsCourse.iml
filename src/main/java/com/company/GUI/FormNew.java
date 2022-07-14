@@ -1,12 +1,10 @@
-package main.java.com.company.GUI;
+package com.company.GUI;
 
 
-import main.java.com.company.GrafLogic.Graf;
+import com.company.GrafLogic.Graf;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class FormNew extends JFrame{
     private JPanel mainPanel;

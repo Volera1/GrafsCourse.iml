@@ -1,7 +1,6 @@
-package main.java.com.company.GUI;
+package com.company.GUI;
 
-
-import main.java.com.company.GrafLogic.Graf;
+import com.company.GrafLogic.Graf;
 
 import javax.swing.table.AbstractTableModel;
 

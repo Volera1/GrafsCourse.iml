@@ -1,7 +1,7 @@
-package main.java.com.company;
+package com.company;
 
 
-import main.java.com.company.GrafLogic.*;
+import com.company.GrafLogic.*;
 
 public class Main {
 
