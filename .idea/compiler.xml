@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="GrafsCourse" target="17" />
+      <module name="GrafsCourse" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>

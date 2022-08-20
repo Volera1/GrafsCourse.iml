@@ -1,15 +1,27 @@
 package com.company.GUI;
 
+import com.company.GrafLogic.Graf;
+
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
+import java.io.IOException;
 
 import static javax.swing.JOptionPane.*;
+import static com.company.GrafExelWork.*;
 
 public class GrafMenuBar extends JMenuBar {
     private final Component parent = getParent();
-    JFileChooser fileChoose = new JFileChooser();
-    public GrafMenuBar(){
+
+    JFileChooser fileChoose = new JFileChooser("C:\\Users\\User\\Documents\\GrafsCourse");
+    FileFilter filter = new FileNameExtensionFilter("Excel file", "xls", "xlsx");
+
+    public GrafMenuBar(Graf graf){
+        //добавляем фильтр файловыбиратору
+        fileChoose.addChoosableFileFilter(filter);
+        fileChoose.setFileFilter(filter);
         //мекет меню справки
         JMenu helpMenu = new JMenu("Справка");
         JMenuItem rebraHelpItem = new JMenuItem("Ребра графа");
@@ -51,12 +63,33 @@ public class GrafMenuBar extends JMenuBar {
         JMenuItem inputFileItem = new JMenuItem("Ввод из файла");
         fileMenu.add(outputFileItem);
         fileMenu.add(inputFileItem);
-        outputFileItem.addActionListener(e -> {
-            int outFile = fileChoose.showOpenDialog(parent);
+        outputFileItem.addActionListener(e -> { //сохранение файла
+            int outFile = fileChoose.showSaveDialog(parent); //получаем информацию о выбранном файле
+            switch (outFile){
+                case JFileChooser.APPROVE_OPTION -> { //файл выбран успешно, сохраняем
+                    try {
+                        showMessageDialog(null,crateGrafExel(graf, String.valueOf(fileChoose.getSelectedFile())),"Сохрание",JOptionPane.PLAIN_MESSAGE);
+                    } catch (IOException ex) {
+                        showMessageDialog(null,"Что-то пошло не так","Ошибка сохранения",JOptionPane.PLAIN_MESSAGE);
+                        ex.printStackTrace();
+                    }
+                    }
+                case JFileChooser.ERROR_OPTION -> { //произошла ошибка, сообщаем об этом
+                    showMessageDialog(null,"Файл не был сохранен","Сохрание",JOptionPane.PLAIN_MESSAGE);
+                    }
+            }
 
         }        );
-        inputFileItem.addActionListener(e -> {
-            int inFile = fileChoose.showSaveDialog(parent);
+        inputFileItem.addActionListener(e -> { //открытие фала
+            int inFile = fileChoose.showOpenDialog(parent);
+            switch (inFile){
+                case JFileChooser.APPROVE_OPTION -> { //файл выбран успешно, сохраняем
+                    showMessageDialog(null,"Файл "+fileChoose.getSelectedFile()+" успешно введен","Ввод",JOptionPane.PLAIN_MESSAGE);
+                    }
+                case JFileChooser.ERROR_OPTION -> { //произошла ошибка, сообщаем об этом
+                    showMessageDialog(null,"Файл не введен","Ввод",JOptionPane.PLAIN_MESSAGE);
+                    }
+            }
 
         });
 

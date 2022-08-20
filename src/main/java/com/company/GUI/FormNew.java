@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FormNew extends JFrame{
+    public Graf graf;
     private JPanel mainPanel;
     private JScrollPane scrollGraf;
     private JTable tableGraf;
@@ -24,7 +25,7 @@ public class FormNew extends JFrame{
         setMinimumSize(new Dimension(800,500));
 
         //работа с отображением графа
-        Graf graf = new Graf(5);
+        graf = new Graf(5);
         graf.addRebra(1,3);
         graf.addRebra(3,5);
         graf.addRebra(4,1);
@@ -62,7 +63,7 @@ public class FormNew extends JFrame{
         +"\nСимметричный? "+graf.simmetry()));
 
         //меню
-        JMenuBar menuBar = new GrafMenuBar();
+        JMenuBar menuBar = new GrafMenuBar(graf);
         this.setJMenuBar(menuBar);
 
         //основные настройки окна
