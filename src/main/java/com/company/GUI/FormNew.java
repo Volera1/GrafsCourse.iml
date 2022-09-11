@@ -63,7 +63,7 @@ public class FormNew extends JFrame{
         +"\nСимметричный? "+graf.simmetry()));
 
         //меню
-        JMenuBar menuBar = new GrafMenuBar(graf);
+        JMenuBar menuBar = new GrafMenuBar(graf, grafsIncidenceTableModel);
         this.setJMenuBar(menuBar);
 
         //основные настройки окна

@@ -1,19 +1,19 @@
 package com.company.GrafLogic;
 
 public class Rebra {
-    public Grany startPoint;
-    public Grany finishPoint;
+    public Vertex startPoint;
+    public Vertex finishPoint;
 
     public Rebra() { //
-        startPoint = new Grany();
-        finishPoint = new Grany();
+        startPoint = new Vertex();
+        finishPoint = new Vertex();
     }
 
-    public Rebra(Grany start, Grany finish) {
+    public Rebra(Vertex start, Vertex finish) {
         startPoint = start;
-        start.StepenGrany += 1; //степени граней увеличиваются при появлении ребра
+        start.StepenVertex += 1; //степени граней увеличиваются при появлении ребра
         finishPoint = finish;
-        finish.StepenGrany += 1;
+        finish.StepenVertex += 1;
     }
 
     public boolean isLoop() { //проверка ребра на петлю

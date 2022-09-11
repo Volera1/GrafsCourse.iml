@@ -3,53 +3,62 @@ package com.company.GrafLogic;
 import java.util.*;
 
 public class Graf {
-    public ArrayList<Grany> granyList;
+    public ArrayList<Vertex> vertexList;
     public ArrayList<Rebra> rebraList;
 
-    Graf() {
-        granyList = new ArrayList<>();
+    public Graf() {
+        vertexList = new ArrayList<>();
         rebraList = new ArrayList<>();
     }
 
-    Graf(int countOfGraney, int countOfReber) { //четко ограниченный граф
-        granyList = new ArrayList<>(countOfGraney);
+    public Graf(int countOfGraney, int countOfReber) { //четко ограниченный граф
+        vertexList = new ArrayList<>(countOfGraney);
         for (int i = 0; i < countOfGraney; i++) {
-            granyList.add(new Grany());
+            vertexList.add(new Vertex());
         }
         rebraList = new ArrayList<>(countOfReber);
     }
 
     public Graf(int countOfGraney) { //только грани заданны
-        granyList = new ArrayList<>(countOfGraney);
+        vertexList = new ArrayList<>(countOfGraney);
         for (int i = 0; i < countOfGraney; i++) {
-            granyList.add(new Grany());
+            vertexList.add(new Vertex());
         }
         rebraList = new ArrayList<>();
     }
 
-    public void deleteRebra(Rebra deleted) //удаление ребра, учитывая степени граней
+    public void cloneGraf(Graf newgraf){
+        this.vertexList= newgraf.vertexList;
+        this.rebraList= newgraf.rebraList;
+    }
+
+    public void deleteRebra(Rebra deleted) //удаление ребра, учитывая степени вершин
     {
-        deleted.startPoint.StepenGrany -= 1;
-        deleted.finishPoint.StepenGrany -= 1;
+        deleted.startPoint.StepenVertex -= 1;
+        deleted.finishPoint.StepenVertex -= 1;
         rebraList.remove(deleted);
     }
 
-    public void deleteRebra(int numRebra) { //удаление ребра по номеру, учитывая степени граней
-        rebraList.get(numRebra - 1).startPoint.StepenGrany = -1;
-        rebraList.get(numRebra - 1).finishPoint.StepenGrany = -1;
+    public void deleteRebra(int numRebra) { //удаление ребра по номеру, учитывая степени вершин
+        rebraList.get(numRebra - 1).startPoint.StepenVertex = -1;
+        rebraList.get(numRebra - 1).finishPoint.StepenVertex = -1;
         rebraList.remove(numRebra - 1);
     }
 
     public void deleteAllRebra() {
-        for (Grany grany : this.granyList) {
-            grany.setNullStepenGrany();
+        for (Vertex vertex : this.vertexList) {
+            vertex.setNullStepenGrany();
         }
         rebraList.clear();
     } //удаление всех ребер
 
-    public void addGrany(Grany g) { //добавляторы
-        granyList.add(g);
+    public void addVertex(Vertex g) { //добавляторы
+        vertexList.add(g);
     }
+
+    public void addVertex(){vertexList.add(new Vertex());}
+
+    public void addRebra(){rebraList.add(new Rebra());}
 
     public void addRebra(Rebra r) {
         rebraList.add(r);
@@ -59,8 +68,8 @@ public class Graf {
         addRebra(new Rebra(getGrany(first), getGrany(finish)));
     }
 
-    public Grany getGrany(int numGrany) { //getters and setters с учетом счета от 1
-        return granyList.get(numGrany - 1);
+    public Vertex getGrany(int numGrany) { //getters and setters с учетом счета от 1
+        return vertexList.get(numGrany - 1);
     }
 
     public Rebra getRebra(int numRebra) {
@@ -111,8 +120,8 @@ public class Graf {
 
     public boolean simmetry() {//симметричный граф - транзитивный, без петель, с единой степенью граней
         if (transitive() && (getCountOfLoops() == 0)) {
-            for (Grany gran : granyList) {
-                if (gran.getStepenGrany() != granyList.get(0).getStepenGrany()) {
+            for (Vertex gran : vertexList) {
+                if (gran.getStepenVertex() != vertexList.get(0).getStepenVertex()) {
                     return false;
                 }
             }
@@ -122,7 +131,7 @@ public class Graf {
     }
 
     public boolean refleks() { // рефлексивность - все вершины имеют петли
-        for (Grany gran : granyList) {
+        for (Vertex gran : vertexList) {
             boolean exist = false;
             for (Rebra rebro : rebraList) {
                 if (rebro.isLoop() && rebro.startPoint == gran) {
@@ -137,20 +146,20 @@ public class Graf {
         return true;
     }
 
-    public boolean connect(Grany a, Grany b) { //наличие пути меж вершинами
+    public boolean connect(Vertex a, Vertex b) { //наличие пути меж вершинами
         if (a == b) { //если сравниваемые грани совпали, то нет смысла проверять)
             return true;
         }
-        boolean[] visited = new boolean[granyList.size()];
-        visited[granyList.indexOf(a)] = true;  //начальная точка посещена
+        boolean[] visited = new boolean[vertexList.size()];
+        visited[vertexList.indexOf(a)] = true;  //начальная точка посещена
         for (Rebra r : rebraList) { //идем по ребрам, которые соединены с А и непройдеными вершинами
-            if ((r.startPoint == a && !visited[granyList.indexOf(r.finishPoint)]) || (r.finishPoint == a && !visited[granyList.indexOf(r.startPoint)])) {
-                if (r.startPoint == a && !visited[granyList.indexOf(r.finishPoint)]) {
+            if ((r.startPoint == a && !visited[vertexList.indexOf(r.finishPoint)]) || (r.finishPoint == a && !visited[vertexList.indexOf(r.startPoint)])) {
+                if (r.startPoint == a && !visited[vertexList.indexOf(r.finishPoint)]) {
                     if (connect(r.finishPoint, b, visited)) { //рекурсия для прохода по всем возможным путям
                         return true;
                     }
                 }
-                if (r.finishPoint == a && !visited[granyList.indexOf(r.startPoint)]) {
+                if (r.finishPoint == a && !visited[vertexList.indexOf(r.startPoint)]) {
                     if (connect(r.startPoint, b, visited)) {
                         return true;
                     }
@@ -160,18 +169,18 @@ public class Graf {
         return false;
     }
 
-    private boolean connect(Grany a, Grany b, boolean[] visited) { //наличие пути меж вершинами вспомогательное
+    private boolean connect(Vertex a, Vertex b, boolean[] visited) { //наличие пути меж вершинами вспомогательное
         if (a == b) { //если сравниваемые грани совпали, то они соединены
             return true;
         }
-        visited[granyList.indexOf(a)] = true; //начальная точка посещена
+        visited[vertexList.indexOf(a)] = true; //начальная точка посещена
         for (Rebra r : rebraList) { //идем по ребрам, которые соединены с А и непройдеными вершинами
-            if (r.startPoint == a && !visited[granyList.indexOf(r.finishPoint)]) {
+            if (r.startPoint == a && !visited[vertexList.indexOf(r.finishPoint)]) {
                 if (connect(r.finishPoint, b, visited)) {
                     return true;
                 }
             }
-            if (r.finishPoint == a && !visited[granyList.indexOf(r.startPoint)]) {
+            if (r.finishPoint == a && !visited[vertexList.indexOf(r.startPoint)]) {
                 if (connect(r.startPoint, b, visited)) {
                     return true;
                 }
@@ -181,8 +190,8 @@ public class Graf {
     }
 
     public boolean connectivity() {//связность
-        for (Grany gran1 : granyList) { //обходим пары вершин, чтобы у каждой из них был путь к любой вершине
-            for (Grany gran2 : granyList) {
+        for (Vertex gran1 : vertexList) { //обходим пары вершин, чтобы у каждой из них был путь к любой вершине
+            for (Vertex gran2 : vertexList) {
                 if (!connect(gran1, gran2)) {
                     return false; //если хоть одна пара вершин не имеют общего пути, то граф не связен
                 }
@@ -191,20 +200,20 @@ public class Graf {
         return true;
     }
 
-    public String minimalWay(Grany A, Grany B) { //функция поиска минимального пути
+    public String minimalWay(Vertex A, Vertex B) { //функция поиска минимального пути
         if (!connect(A, B)) {
             return "Вершины не связаны";
         }
-        boolean[] visited = new boolean[granyList.size()]; //Посещенные вершины первоначально false
-        visited[granyList.indexOf(A)] = true;  //начальная точка посещена
+        boolean[] visited = new boolean[vertexList.size()]; //Посещенные вершины первоначально false
+        visited[vertexList.indexOf(A)] = true;  //начальная точка посещена
         StringBuilder way = new StringBuilder(); //Путь мин до вершин
         int min = -1; //значение минимального пути до вершины
         for (Rebra r : rebraList) { //идем по ребрам, которые соединены с А и непройдеными вершинами
-            if ((r.startPoint == A && !visited[granyList.indexOf(r.finishPoint)]) || (r.finishPoint == A && !visited[granyList.indexOf(r.startPoint)])) {
-                if (r.startPoint == A && !visited[granyList.indexOf(r.finishPoint)]) {
+            if ((r.startPoint == A && !visited[vertexList.indexOf(r.finishPoint)]) || (r.finishPoint == A && !visited[vertexList.indexOf(r.startPoint)])) {
+                if (r.startPoint == A && !visited[vertexList.indexOf(r.finishPoint)]) {
                     way.append(minimalWay(r.finishPoint, B, visited, min));//рекурсия для прохода по всем возможным путям
                 }
-                if (r.finishPoint == A && !visited[granyList.indexOf(r.startPoint)]) {
+                if (r.finishPoint == A && !visited[vertexList.indexOf(r.startPoint)]) {
                     way.append(minimalWay(r.startPoint, B, visited, min));
                 }
                 min += r.getPrice();
@@ -214,20 +223,20 @@ public class Graf {
         return way.toString();
     }
 
-    public String minimalWay(Grany A, Grany B, boolean[] visited, int min) { //функция поиска минимального пути
+    public String minimalWay(Vertex A, Vertex B, boolean[] visited, int min) { //функция поиска минимального пути
         StringBuilder result = new StringBuilder();
         if (A == B) { //если сравниваемые грани совпали, то они соединены
-            return String.valueOf(granyList.indexOf(B));
+            return String.valueOf(vertexList.indexOf(B));
         }
-        visited[granyList.indexOf(A)] = true; //начальная точка посещена
+        visited[vertexList.indexOf(A)] = true; //начальная точка посещена
         for (Rebra r : rebraList) { //идем по ребрам, которые соединены с А и непройдеными вершинами
-            if (r.startPoint == A && !visited[granyList.indexOf(r.finishPoint)]) {
-                if (r.startPoint == A && !visited[granyList.indexOf(r.finishPoint)]) {
+            if (r.startPoint == A && !visited[vertexList.indexOf(r.finishPoint)]) {
+                if (r.startPoint == A && !visited[vertexList.indexOf(r.finishPoint)]) {
                     result.append(minimalWay(r.finishPoint, B, visited, min));
                 }
             }
-            if (r.finishPoint == A && !visited[granyList.indexOf(r.startPoint)]) {
-                if (r.finishPoint == A && !visited[granyList.indexOf(r.startPoint)]) {
+            if (r.finishPoint == A && !visited[vertexList.indexOf(r.startPoint)]) {
+                if (r.finishPoint == A && !visited[vertexList.indexOf(r.startPoint)]) {
                     result.append(minimalWay(r.startPoint, B, visited, min));
                 }
             }
@@ -235,12 +244,12 @@ public class Graf {
         return result.toString();
     }
     public String changeCountOfGrany(int newCount){
-        if (newCount < granyList.size()) {
-            while (newCount!=granyList.size()){
+        if (newCount < vertexList.size()) {
+            while (newCount!= vertexList.size()){
                 ArrayList<Rebra> anconnected = new ArrayList<>();
                 for (Rebra r:rebraList){//проверяем ребра, которые могли быть соединены с вершиной
                     anconnected.add(r);
-                    if (r.startPoint == getGrany(granyList.size())) {//проверяем начальную точку ребра
+                    if (r.startPoint == getGrany(vertexList.size())) {//проверяем начальную точку ребра
                         if (r.isLoop()){//если было петлей, то удаляем
                             anconnected.remove(r);
                         }
@@ -248,27 +257,39 @@ public class Graf {
                             r.startPoint=r.finishPoint;//иначе делаем петлей
                         }
                     }
-                    if (r.finishPoint == getGrany(granyList.size())) {//проверяем конечную точку
+                    if (r.finishPoint == getGrany(vertexList.size())) {//проверяем конечную точку
                         r.finishPoint=r.startPoint;//иначе делаем петлей
 
                     }
                 }
                 rebraList=anconnected;
-                granyList.remove(granyList.size()-1);
+                vertexList.remove(vertexList.size()-1);
             }
             return "Количество вершин уменьшено до "+newCount;
         }
-        else if (newCount == granyList.size()){
+        else if (newCount == vertexList.size()){
             return "Количество вершин не изменено. Было указано значение равное предыдущему";
         }
         else {
-            while (newCount!=granyList.size()){
-                granyList.add(new Grany());
+            while (newCount!= vertexList.size()){
+                vertexList.add(new Vertex());
             }
             return "Количество вершин увеличено до "+newCount;
         }
     }
 
+    public boolean rebraStartCheck(Rebra rebra){//проверка первой связи ребра с вершинами графа
+        for (Vertex vertex:vertexList) {
+            if (vertex==rebra.startPoint)return true;
+        }
+        return false;
+    }
+    public boolean rebraFinishCheck(Rebra rebra){//проверка конечной связи ребра с вершинами графа
+        for (Vertex vertex:vertexList) {
+            if (vertex==rebra.finishPoint)return true;
+        }
+        return false;
+    }
 }
 
 

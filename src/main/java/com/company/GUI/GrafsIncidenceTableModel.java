@@ -16,7 +16,7 @@ public class GrafsIncidenceTableModel extends AbstractTableModel { //класс 
         if (column==0){
             return "№";
         }
-        if (column <= data.granyList.size()) {
+        if (column <= data.vertexList.size()) {
             return String.valueOf(column);
         }
         return "";
@@ -32,7 +32,7 @@ public class GrafsIncidenceTableModel extends AbstractTableModel { //класс 
 
     @Override
     public int getColumnCount() {
-        return data.granyList.size()+1;
+        return data.vertexList.size()+1;
     }
 
     @Override
